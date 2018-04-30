@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Station.StationType;
 
 public class MainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -59,13 +60,13 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         FragmentManager manager = getActivity().getSupportFragmentManager();
-        StationsFragment stationOneFragment = StationsFragment.newInstance("","");
+        StationsFragment stationOneFragment = StationsFragment.newInstance(StationType.FEATURED);
         manager.beginTransaction().add(R.id.container_top_row, stationOneFragment).commit();
 
-        StationsFragment stationTwoFragment = StationsFragment.newInstance("","");
+        StationsFragment stationTwoFragment = StationsFragment.newInstance(StationType.RECENT);
         manager.beginTransaction().add(R.id.container_middle_row, stationTwoFragment).commit();
 
-        StationsFragment stationThreeFragment = StationsFragment.newInstance("","");
+        StationsFragment stationThreeFragment = StationsFragment.newInstance(StationType.PARTY);
         manager.beginTransaction().add(R.id.container_bottom_row, stationThreeFragment).commit();
 
         return view;

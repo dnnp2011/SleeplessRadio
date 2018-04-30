@@ -8,6 +8,34 @@ public class Station {
     private String imgUri;
     //endregion
 
+    public enum StationType {
+        FEATURED, RECENT, PARTY;
+
+        public int toInt() {
+            if (this == FEATURED)
+                return 0;
+            else if (this == RECENT)
+                return 1;
+            else if (this == PARTY)
+                return 2;
+            else
+                return -1;
+        }
+
+        public static StationType fromInt(int x) {
+            switch (x) {
+                case 0:
+                    return  FEATURED;
+                case 1:
+                    return RECENT;
+                case 2:
+                    return  PARTY;
+                default:
+                    return null;
+            }
+        }
+    }
+
 
     //region Getters and Setters
     public String getStationTitle() {
@@ -18,11 +46,6 @@ public class Station {
         return imgUri;
     }
     //endregion
-
-
-    public enum StationType {
-        FEATURED, RECENT, PARTY
-    }
 
 
     //region Constructor

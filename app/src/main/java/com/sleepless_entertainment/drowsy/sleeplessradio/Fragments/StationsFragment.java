@@ -1,7 +1,7 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Fragments;
 
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,55 +11,25 @@ import android.view.ViewGroup;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Adapters.StationsAdapter;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Station.StationType;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Services.DataService;
 
 public class StationsFragment extends Fragment {
 
-    public static final int STATION_TYPE_FEATURED = 0;
-    public static final int STATION_TYPE_RECENT = 1;
-    public static final int STATION_TYPE_PARTY = 2;
 
     public static final String ARG_STATION_TYPE = "StationTypeParam";
-
-    public enum StationType {
-        FEATURED, RECENT, PARTY;
-
-        public int toInt() {
-            if (this == FEATURED)
-                return 0;
-            else if (this == RECENT)
-                return 1;
-            else if (this == PARTY)
-                return 2;
-            else
-                return -1;
-        }
-
-        public static StationType fromInt(int x) {
-            switch (x) {
-                case 0:
-                    return  FEATURED;
-                case 1:
-                    return RECENT;
-                case 2:
-                    return  PARTY;
-                default:
-                    return null;
-            }
-        }
-    }
 
     private StationType stationType;
 
 
     public StationsFragment() {
         // Required empty public constructor
-        newInstance(StationType.FEATURED.toInt());
     }
 
-    public static StationsFragment newInstance(int stationType) {
+    public static StationsFragment newInstance(StationType stationType) {
         StationsFragment fragment = new StationsFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_STATION_TYPE, stationType);
+        args.putInt(ARG_STATION_TYPE, stationType.toInt());
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +38,7 @@ public class StationsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            stationType = StationType.fromInt(getArguments().getInt(ARG_STATION_TYPE));
+            stationType = StationType.fromInt(getArguments().getInt(ARG_STATION_TYPE, -1));
         }
     }
 
@@ -80,7 +50,20 @@ public class StationsFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.stations_recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        StationsAdapter adapter = new StationsAdapter();
+        StationsAdapter adapter = null;
+
+        switch (stationType) {
+            case FEATURED:
+                adapter = new StationsAdapter(DataService.getInstance().getFeaturedStations());
+                break;
+            case RECENT:
+                adapter = new StationsAdapter(DataService.getInstance().getRecentStations());
+                break;
+            case PARTY:
+                adapter = new StationsAdapter(DataService.getInstance().getPartyPlaylist());
+                break;
+        }
+
         recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
