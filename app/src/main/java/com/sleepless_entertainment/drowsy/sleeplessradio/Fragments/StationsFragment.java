@@ -1,7 +1,6 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Adapters.StationsAdapter;
-import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Station.StationType;
+import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Services.DataService;
 
 public class StationsFragment extends Fragment {
