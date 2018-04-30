@@ -8,6 +8,9 @@ public class Station {
     private String imgUri;
     //endregion
 
+    /**
+     * The valid Station Types for each RecyclerView
+     */
     public enum StationType {
         FEATURED, RECENT, PARTY;
 
@@ -43,7 +46,7 @@ public class Station {
     }
 
     public String getImgUri() {
-        return imgUri;
+        return DRAWABLE + imgUri;
     }
     //endregion
 
