@@ -9,37 +9,57 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Adapters.StationsAdapter;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 
 public class StationsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static final int STATION_TYPE_FEATURED = 0;
+    public static final int STATION_TYPE_RECENT = 1;
+    public static final int STATION_TYPE_PARTY = 2;
+
+    public static final String ARG_STATION_TYPE = "StationTypeParam";
+
+    public enum StationType {
+        FEATURED, RECENT, PARTY;
+
+        public int toInt() {
+            if (this == FEATURED)
+                return 0;
+            else if (this == RECENT)
+                return 1;
+            else if (this == PARTY)
+                return 2;
+            else
+                return -1;
+        }
+
+        public static StationType fromInt(int x) {
+            switch (x) {
+                case 0:
+                    return  FEATURED;
+                case 1:
+                    return RECENT;
+                case 2:
+                    return  PARTY;
+                default:
+                    return null;
+            }
+        }
+    }
+
+    private StationType stationType;
 
 
     public StationsFragment() {
         // Required empty public constructor
+        newInstance(StationType.FEATURED.toInt());
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StationsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StationsFragment newInstance(String param1, String param2) {
+    public static StationsFragment newInstance(int stationType) {
         StationsFragment fragment = new StationsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_STATION_TYPE, stationType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,8 +68,7 @@ public class StationsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            stationType = StationType.fromInt(getArguments().getInt(ARG_STATION_TYPE));
         }
     }
 
@@ -60,6 +79,9 @@ public class StationsFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.stations_recycler_view);
         recyclerView.setHasFixedSize(true);
+
+        StationsAdapter adapter = new StationsAdapter();
+        recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

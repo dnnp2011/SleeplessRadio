@@ -3,6 +3,7 @@ package com.sleepless_entertainment.drowsy.sleeplessradio.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,19 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        StationsFragment stationOneFragment = StationsFragment.newInstance("","");
+        manager.beginTransaction().add(R.id.container_top_row, stationOneFragment).commit();
+
+        StationsFragment stationTwoFragment = StationsFragment.newInstance("","");
+        manager.beginTransaction().add(R.id.container_middle_row, stationTwoFragment).commit();
+
+        StationsFragment stationThreeFragment = StationsFragment.newInstance("","");
+        manager.beginTransaction().add(R.id.container_bottom_row, stationThreeFragment).commit();
+
+        return view;
     }
 
 }

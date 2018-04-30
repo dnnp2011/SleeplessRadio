@@ -1,23 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a66666"
+    android:background="@color/colorAccent"
     tools:context=".Fragments.MainFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
+            <TextView
+                android:id="@+id/stationOneLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:text="It's Friday Evening"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/stationOneSubtextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Play something for..."
+                app:layout_constraintStart_toStartOf="@+id/stationOneLabel"
+                app:layout_constraintTop_toBottomOf="@+id/stationOneLabel" />
+
+            <FrameLayout
+                android:id="@+id/container_top_row"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorAccentDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stationOneSubtextLabel">
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/stationTwoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Recent Activity"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/stationOneSubtextLabel"
+                app:layout_constraintTop_toBottomOf="@+id/container_top_row" />
+
+            <TextView
+                android:id="@+id/stationTwoSubtextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Recently played or added"
+                app:layout_constraintStart_toStartOf="@+id/stationTwoLabel"
+                app:layout_constraintTop_toBottomOf="@+id/stationTwoLabel" />
+
+            <FrameLayout
+                android:id="@+id/container_middle_row"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorAccentDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stationTwoSubtextLabel">
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/stationThreeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Recent Activity"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/stationTwoSubtextLabel"
+                app:layout_constraintTop_toBottomOf="@+id/container_middle_row" />
+
+            <TextView
+                android:id="@+id/stationThreeSubtextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="3dp"
+                android:text="Recently played or added"
+                app:layout_constraintStart_toStartOf="@+id/stationThreeLabel"
+                app:layout_constraintTop_toBottomOf="@+id/stationThreeLabel" />
+
+            <FrameLayout
+                android:id="@+id/container_bottom_row"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorAccentDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stationThreeSubtextLabel">
+
+            </FrameLayout>
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

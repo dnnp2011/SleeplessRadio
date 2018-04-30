@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Holders.StationViewHolder;
 
+//  Fetches data from source (Database, File, etc) and sticks into ViewHolder to then be loaded into the View
+
 public class StationsAdapter extends RecyclerView.Adapter<StationViewHolder> {
 
 
@@ -24,5 +26,5 @@ public class StationsAdapter extends RecyclerView.Adapter<StationViewHolder> {
     public int getItemCount() {
         return 0;
     }
-    
+
 }
