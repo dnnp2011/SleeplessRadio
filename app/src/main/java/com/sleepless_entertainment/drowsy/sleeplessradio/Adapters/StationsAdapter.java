@@ -49,15 +49,22 @@ public class StationsAdapter extends RecyclerView.Adapter<StationViewHolder> {
      * @param position The position in the data source of the next View
      */
     @Override
-    public void onBindViewHolder(@NonNull StationViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull StationViewHolder holder, final int position) {
         Station station = stations.get(position);
         holder.updateUI(station);
 
-        final int p = position;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Load the details fragment
+                int p = position;
+
+            }
+        });
     }
 
     /**
-     * @return Numbers of elements in data source
+     * @return Number of elements in data source
      */
     @Override
     public int getItemCount() {

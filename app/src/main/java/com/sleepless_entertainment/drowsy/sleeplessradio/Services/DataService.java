@@ -29,10 +29,11 @@ public class DataService {
 //        TODO: Add functionality to save and display recently selected stations
 
         ArrayList<Station> list = new ArrayList<>();
-        list.add(getFeaturedStations().get(0));
+        list.add(getFeaturedStations().get(2));
         list.add(getPartyPlaylist().get(1));
         list.add(getFeaturedStations().get(1));
         list.add(getPartyPlaylist().get(2));
+        list.add(getFeaturedStations().get(0));
 
         return list;
     }

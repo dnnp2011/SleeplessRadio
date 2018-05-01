@@ -1,7 +1,9 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Activities;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
@@ -9,10 +11,23 @@ import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static MainActivity mainActivity;
+
+    public static MainActivity getMainActivity() {
+        return mainActivity;
+    }
+
+    private static void setMainActivity(MainActivity mainActivity) {
+        MainActivity.mainActivity = mainActivity;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MainActivity.setMainActivity(this);
+
         loadMainFragment();
     }
 
@@ -29,5 +44,11 @@ public class MainActivity extends AppCompatActivity {
             mainFragment = MainFragment.newInstance("", "");
             manager.beginTransaction().add(R.id.fragment_container, mainFragment).commit();
         }
+    }
+
+    public void loadNextFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction().addToBackStack(null);
+//        transaction.setCustomAnimations();
     }
 }
