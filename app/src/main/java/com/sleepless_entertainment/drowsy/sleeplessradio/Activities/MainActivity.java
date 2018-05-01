@@ -42,13 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (mainFragment == null) {
             mainFragment = MainFragment.newInstance("", "");
-            manager.beginTransaction().add(R.id.fragment_container, mainFragment).commit();
+            manager.beginTransaction().setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top).add(R.id.fragment_container, mainFragment).commit();
         }
     }
 
+    /**
+     * Generic method to load the target fragment. Adds to Backstack, and sets standard animation (In Left, Out Right, PopIn Right, PopOut Left)
+     * @param fragment The fragment to be loaded. Must pass newInstance of fragment
+     */
     public void loadNextFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction().addToBackStack(null);
-//        transaction.setCustomAnimations();
+        FragmentTransaction transaction = manager.beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+        transaction.replace(R.id.fragment_container, fragment);
     }
 }
