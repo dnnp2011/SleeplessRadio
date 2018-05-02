@@ -3,11 +3,9 @@ package com.sleepless_entertainment.drowsy.sleeplessradio.Activities;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
-import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Station;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +17,21 @@ import java.io.Serializable;
 import java.util.Base64;
 
 public class MainActivity extends AppCompatActivity {
+
+    //region To-Do List:
+    //    TODO: Add basic functionality to toolbar buttons
+    //    TODO: Complete DetailsFragment
+    //    TODO: Animate toolbar changes between Fragments
+    //    TODO: Add more station cards to exemplify scrolling functionality
+    //    TODO: Add "More" Button
+    //    TODO: Add "Now Playing" footer toolbar to MainActivity
+    //    TODO: Add capacity to play limited number of songs, or tune into internet radio station
+    //    TODO: Animate CardView inflating into DetailsFragment background
+    //    TODO: Add basic search functionality
+    //    TODO: Add bluetooth casting functionality
+    //    TODO: Add basic media player options: Start, Stop, Pause
+    //    TODO: Add data persistence for recent stations, and current playing song
+    //endregion
 
     private static MainActivity mainActivity;
 
@@ -51,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (mainFragment == null) {
             mainFragment = MainFragment.newInstance("", "");
-            manager.beginTransaction().setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top).add(R.id.fragment_container, mainFragment).commit();
+            manager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top)
+                    .add(R.id.fragment_container, mainFragment)
+                    .commit();
         }
     }
 
@@ -61,8 +77,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void loadNextFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                .replace(R.id.fragment_container, fragment).commit();
+        manager.beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 
     public static String serializeToString(Serializable object) throws IOException {

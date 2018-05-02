@@ -43,7 +43,8 @@ public class DetailsFragment extends Fragment {
         if (getArguments() != null) {
             try {
                 mParam1 = (Station) MainActivity.reconstituteFromString(getArguments().getString(ARG_PARAM1));
-            } catch (IOException | ClassNotFoundException e) {
+            }
+            catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
