@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.DetailsFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Holders.StationViewHolder;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Station;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 //  Fetches data from source (Database, File, etc) and sticks into ViewHolder to then be loaded into the View
@@ -50,15 +53,18 @@ public class StationsAdapter extends RecyclerView.Adapter<StationViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull StationViewHolder holder, final int position) {
-        Station station = stations.get(position);
+        final Station station = stations.get(position);
         holder.updateUI(station);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Load the details fragment
-                int p = position;
-
+                try {
+                    MainActivity.getMainActivity().loadNextFragment(DetailsFragment.newInstance(station));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

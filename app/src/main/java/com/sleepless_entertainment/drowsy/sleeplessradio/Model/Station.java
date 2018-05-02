@@ -1,6 +1,8 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Model;
 
-public class Station {
+import java.io.Serializable;
+
+public class Station implements Serializable {
 
     //region Class Variables
     final String DRAWABLE = "drawable/";
@@ -58,4 +60,9 @@ public class Station {
     }
     //endregion
 
+
+    @Override
+    public String toString() {
+        return String.format("Station Object-> Title: %s URI: %s", this.stationTitle, this.imgUri);
+    }
 }

@@ -7,7 +7,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Station;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Base64;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,11 +57,27 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Generic method to load the target fragment. Adds to Backstack, and sets standard animation (In Left, Out Right, PopIn Right, PopOut Left)
-     * @param fragment The fragment to be loaded. Must pass newInstance of fragment
+     * @param fragment The fragment to be loaded. Must pass newInstance of fragment with the Station as an argument
      */
     public void loadNextFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.fragment_container, fragment);
+        manager.beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
+                .replace(R.id.fragment_container, fragment).commit();
+    }
+
+    public static String serializeToString(Serializable object) throws IOException {
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteOutputStream);
+        objectOutputStream.writeObject(object);
+        objectOutputStream.close();
+        return Base64.getEncoder().encodeToString(byteOutputStream.toByteArray());
+    }
+
+    public static Object reconstituteFromString(String string) throws IOException, ClassNotFoundException {
+        byte[] data = Base64.getDecoder().decode(string);
+        ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(data));
+        Object object = (objectInputStream.readObject());
+        objectInputStream.close();
+        return object;
     }
 }
