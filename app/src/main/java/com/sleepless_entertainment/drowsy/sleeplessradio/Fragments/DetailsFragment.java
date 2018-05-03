@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class DetailsFragment extends Fragment {
     private Station station;
     private TextView stationNameView;
     private ImageView stationImgView;
+    private FrameLayout infoBarLayout;
 
 
     public DetailsFragment() {
@@ -65,6 +67,7 @@ public class DetailsFragment extends Fragment {
 
         stationNameView = view.findViewById(R.id.stationNameView);
         stationImgView = view.findViewById(R.id.stationImgView);
+        infoBarLayout = view.findViewById(R.id.detailInfoBar);
 
 //        Load in station details fragment and change infoBar
         loadStationView();
@@ -82,25 +85,31 @@ public class DetailsFragment extends Fragment {
             Fragment targetFragment;
 
             if (station.getStationTitle().equals(StationGenre.FLYING.toString())) {
+                infoBarLayout.setBackgroundColor(getResources().getColor(R.color.flightPlanAccent, null));
                 targetFragment = new DetailsFlightPlan();
             }
             else if (station.getStationTitle().equals(StationGenre.BIKING.toString())) {
-                targetFragment = new DetailsFlightPlan();
+                infoBarLayout.setBackgroundColor(getResources().getColor(R.color.bikingAccent, null));
+                targetFragment = new DetailsBiking();
             }
             else if (station.getStationTitle().equals(StationGenre.KIDS.toString())) {
-                targetFragment = new DetailsFlightPlan();
+                infoBarLayout.setBackgroundColor(getResources().getColor(R.color.kidsJamsAccent, null));
+                targetFragment = new DetailsKidsJams();
             }
             else if (station.getStationTitle().equals(StationGenre.SOCIAL.toString())) {
-                targetFragment = new DetailsFlightPlan();
+                infoBarLayout.setBackgroundColor(getResources().getColor(R.color.socialAccent, null));
+                targetFragment = new DetailsSocial();
             }
             else if (station.getStationTitle().equals(StationGenre.SOUL.toString())) {
-                targetFragment = new DetailsFlightPlan();
+                infoBarLayout.setBackgroundColor(getResources().getColor(R.color.soulAccent, null));
+                targetFragment = new DetailsSoul();
             }
             else if (station.getStationTitle().equals(StationGenre.THROWBACK.toString())) {
-                targetFragment = new DetailsFlightPlan();
+                infoBarLayout.setBackgroundColor(getResources().getColor(R.color.throwbackAccent, null));
+                targetFragment = new DetailsThrowback();
             }
             else {
-                System.out.println("ERROR-> DetaisFragment.loadStationView() : Cannot match stationTitle");
+                System.out.println("ERROR-> DetailsFragment.loadStationView() : Cannot match stationTitle");
                 return;
             }
 

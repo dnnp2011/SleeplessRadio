@@ -7,4 +7,7 @@
     <string name="throwback_title">Blast From the Past (Throwback tunes)</string>
     <string name="social_title">Gather Round (Jam with your friends)</string>
     <string name="soul_title">Unlock Your Soul (Inspiring songs)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

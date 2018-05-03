@@ -1,11 +1,13 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Activities;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MediaBarFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 
 import java.io.ByteArrayInputStream;
@@ -16,7 +18,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Base64;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MediaBarFragment.OnMediaBarFragmentInteractionListener {
 
     //region To-Do List:
     //    TODO: Add basic functionality to toolbar buttons
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     //    TODO: Add bluetooth casting functionality
     //    TODO: Add basic media player options: Start, Stop, Pause
     //    TODO: Add data persistence for recent stations, and current playing song
+    //    TODO: Handle switching view modes
+    //    TODO:
+    //    BUG: Problem with Station label under Kid's Jams
     //endregion
 
     private static MainActivity mainActivity;
@@ -69,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, mainFragment)
                     .commit();
         }
+
+
+
+            MediaBarFragment mediaBarFragment = (MediaBarFragment) manager.findFragmentById(R.id.media_bar_container);
+
+
+        if (mediaBarFragment == null) {
+            manager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                    .add(R.id.media_bar_container, MediaBarFragment.newInstance("",""))
+                    .commit();
+        }
     }
 
     /**
@@ -98,5 +115,10 @@ public class MainActivity extends AppCompatActivity {
         Object object = (objectInputStream.readObject());
         objectInputStream.close();
         return object;
+    }
+
+    @Override
+    public void onMediaBarFragmentInteraction(Uri uri) {
+
     }
 }

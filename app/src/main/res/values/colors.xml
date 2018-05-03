@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#009473</color>
     <color name="colorAccent">#f3a523</color>
     <color name="colorAccentDark">#fa5a01</color>
+    <color name="flightPlanAccent">#fa5a01</color>
+    <color name="bikingAccent">#7be9d0</color>
+    <color name="kidsJamsAccent">#fd017e</color>
+    <color name="throwbackAccent">#4a8fe1</color>
+    <color name="socialAccent">#f4a522</color>
+    <color name="soulAccent">#b460fd</color>
 </resources>
