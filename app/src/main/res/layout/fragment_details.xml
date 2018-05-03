@@ -1,17 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccentDark"
+    android:background="#FAFAFA"
     tools:context=".Fragments.DetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="This is the DetailsFragment"
-        android:textSize="30sp" />
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/detailInfoBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fa5a01">
+
+        <TextView
+            android:id="@+id/stationNameView"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:lines="2"
+            android:maxLines="3"
+            android:minLines="2"
+            android:text="Flight Plan (Tunes for travel)"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/stationImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="30dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/flightplanmusic" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/station_details_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="80dp"
+        android:fadeScrollbars="true"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detailInfoBar">
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

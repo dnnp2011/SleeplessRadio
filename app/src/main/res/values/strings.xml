@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Sleepless Radio</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tune_in">Tune In</string>
+    <string name="flight_plan_title">Flight Plan (Tunes  for travel)</string>
+    <string name="biking_title">Two Wheelin\' (Biking playlist)</string>
+    <string name="kids_jams_title">Kid\'s Jams (Music for youngsters)</string>
+    <string name="throwback_title">Blast From the Past (Throwback tunes)</string>
+    <string name="social_title">Gather Round (Jam with your friends)</string>
+    <string name="soul_title">Unlock Your Soul (Inspiring songs)</string>
 </resources>

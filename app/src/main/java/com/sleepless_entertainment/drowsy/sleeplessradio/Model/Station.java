@@ -1,5 +1,8 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Model;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
+import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+
 import java.io.Serializable;
 
 public class Station implements Serializable {
@@ -38,6 +41,30 @@ public class Station implements Serializable {
                 default:
                     return null;
             }
+        }
+    }
+
+    public enum StationGenre {
+        FLYING, BIKING, SOCIAL, KIDS, SOUL, THROWBACK;
+
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case FLYING:
+                    return MainActivity.getMainActivity().getString(R.string.flight_plan_title);
+                case BIKING:
+                    return MainActivity.getMainActivity().getString(R.string.biking_title);
+                case SOCIAL:
+                    return MainActivity.getMainActivity().getString(R.string.social_title);
+                case KIDS:
+                    return MainActivity.getMainActivity().getString(R.string.kids_jams_title);
+                case SOUL:
+                    return MainActivity.getMainActivity().getString(R.string.soul_title);
+                case THROWBACK:
+                    return MainActivity.getMainActivity().getString(R.string.throwback_title);
+            }
+            return null;
         }
     }
 
