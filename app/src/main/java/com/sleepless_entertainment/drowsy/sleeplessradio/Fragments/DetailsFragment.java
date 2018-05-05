@@ -69,54 +69,50 @@ public class DetailsFragment extends Fragment {
         stationImgView = view.findViewById(R.id.stationImgView);
         infoBarLayout = view.findViewById(R.id.detailInfoBar);
 
-//        Load in station details fragment and change infoBar
-        loadStationView();
+//        load in song cards from recycler view
+        setStationData();
+        loadSongView();
 
         return view;
     }
 
-    private void loadStationView() {
+    private void loadSongView() {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        SongsFragment fragment = SongsFragment.newInstance(station.getStationGenre());
+        manager.beginTransaction()
+                .add(R.id.station_details_container, fragment)
+                .commit();
+    }
+
+    private void setStationData() {
         if (station != null) {
             stationNameView.setText(station.getStationTitle());
             int resource = stationImgView.getResources().getIdentifier(station.getImgUri(), null, stationImgView.getContext().getPackageName());
             stationImgView.setImageResource(resource);
 
-            FragmentManager manager = getActivity().getSupportFragmentManager();
-            Fragment targetFragment;
 
-            if (station.getStationTitle().equals(StationGenre.FLYING.toString())) {
+            if (station.getStationGenre().equals(StationGenre.FLYING)) {
                 infoBarLayout.setBackgroundColor(getResources().getColor(R.color.flightPlanAccent, null));
-                targetFragment = new DetailsFlightPlan();
             }
-            else if (station.getStationTitle().equals(StationGenre.BIKING.toString())) {
+            else if (station.getStationGenre().equals(StationGenre.BIKING)) {
                 infoBarLayout.setBackgroundColor(getResources().getColor(R.color.bikingAccent, null));
-                targetFragment = new DetailsBiking();
             }
-            else if (station.getStationTitle().equals(StationGenre.KIDS.toString())) {
+            else if (station.getStationGenre().equals(StationGenre.KIDS)) {
                 infoBarLayout.setBackgroundColor(getResources().getColor(R.color.kidsJamsAccent, null));
-                targetFragment = new DetailsKidsJams();
             }
-            else if (station.getStationTitle().equals(StationGenre.SOCIAL.toString())) {
+            else if (station.getStationGenre().equals(StationGenre.SOCIAL)) {
                 infoBarLayout.setBackgroundColor(getResources().getColor(R.color.socialAccent, null));
-                targetFragment = new DetailsSocial();
             }
-            else if (station.getStationTitle().equals(StationGenre.SOUL.toString())) {
+            else if (station.getStationGenre().equals(StationGenre.SOUL)) {
                 infoBarLayout.setBackgroundColor(getResources().getColor(R.color.soulAccent, null));
-                targetFragment = new DetailsSoul();
             }
-            else if (station.getStationTitle().equals(StationGenre.THROWBACK.toString())) {
+            else if (station.getStationGenre().equals(StationGenre.THROWBACK)) {
                 infoBarLayout.setBackgroundColor(getResources().getColor(R.color.throwbackAccent, null));
-                targetFragment = new DetailsThrowback();
             }
             else {
-                System.out.println("ERROR-> DetailsFragment.loadStationView() : Cannot match stationTitle");
+                System.out.println("ERROR-> DetailsFragment.setStationData() : Cannot match stationTitle");
                 return;
             }
-
-            manager.beginTransaction()
-                    .replace(R.id.station_details_container, targetFragment)
-                    .commit();
-
         }
     }
 

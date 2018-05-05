@@ -40,9 +40,6 @@ public class StationsAdapter extends RecyclerView.Adapter<StationViewHolder> {
     public StationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View stationCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_station, parent, false);
-
-
-
         return new StationViewHolder(stationCard);
     }
 

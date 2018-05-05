@@ -34,31 +34,31 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/genrePic1_01"
+                    android:id="@+id/genreImg1"
                     android:layout_width="0dp"
                     android:layout_height="125dp"
                     android:layout_gravity="top|start"
                     android:src="@drawable/travel_photo_01"
-                    app:layout_constraintEnd_toStartOf="@+id/genrePic2_01"
+                    app:layout_constraintEnd_toStartOf="@+id/genreImg2"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/genrePic2_01"
+                    android:id="@+id/genreImg2"
                     android:layout_width="0dp"
                     android:layout_height="125dp"
                     android:layout_gravity="top|center_horizontal"
                     android:src="@drawable/travel_photo_02"
-                    app:layout_constraintEnd_toStartOf="@+id/genrePic3_01"
+                    app:layout_constraintEnd_toStartOf="@+id/genreImg3"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toEndOf="@+id/genrePic1_01"
+                    app:layout_constraintStart_toEndOf="@+id/genreImg1"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/genrePic3_01"
+                    android:id="@+id/genreImg3"
                     android:layout_width="0dp"
                     android:layout_height="125dp"
                     android:layout_gravity="top|end"
@@ -66,7 +66,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toEndOf="@+id/genrePic2_01"
+                    app:layout_constraintStart_toEndOf="@+id/genreImg2"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
@@ -81,12 +81,12 @@
                     android:backgroundTintMode="src_over"
                     android:scaleType="fitCenter"
                     android:src="@drawable/playbutton"
-                    app:layout_constraintBottom_toTopOf="@+id/descriptionView_01"
+                    app:layout_constraintBottom_toTopOf="@+id/songDescrView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/genrePic3_01" />
+                    app:layout_constraintTop_toBottomOf="@+id/genreImg3" />
 
                 <TextView
-                    android:id="@+id/nameView_01"
+                    android:id="@+id/songNameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|start"
@@ -95,10 +95,10 @@
                     android:text="Song Name"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/genrePic1_01" />
+                    app:layout_constraintTop_toBottomOf="@+id/genreImg1" />
 
                 <TextView
-                    android:id="@+id/descriptionView_01"
+                    android:id="@+id/songDescrView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|start"
@@ -110,7 +110,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nameView_01" />
+                    app:layout_constraintTop_toBottomOf="@+id/songNameView" />
 
             </android.support.constraint.ConstraintLayout>
 

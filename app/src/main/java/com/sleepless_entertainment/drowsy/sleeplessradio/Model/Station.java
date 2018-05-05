@@ -11,6 +11,11 @@ public class Station implements Serializable {
     final String DRAWABLE = "drawable/";
     private String stationTitle;
     private String imgUri;
+    private StationGenre stationGenre;
+
+    public StationGenre getStationGenre() {
+        return stationGenre;
+    }
     //endregion
 
     /**
@@ -66,6 +71,23 @@ public class Station implements Serializable {
             }
             return null;
         }
+
+        public static StationGenre fromString(String string) {
+            if (string.equals(FLYING.toString()))
+                return FLYING;
+            else if (string.equals(BIKING.toString()))
+                return BIKING;
+            else if (string.equals(SOCIAL.toString()))
+                return SOCIAL;
+            else if (string.equals(KIDS.toString()))
+                return KIDS;
+            else if (string.equals(SOUL.toString()))
+                return SOUL;
+            else if (string.equals(THROWBACK.toString()))
+                return THROWBACK;
+            else
+                return null;
+        }
     }
 
 
@@ -81,9 +103,10 @@ public class Station implements Serializable {
 
 
     //region Constructor
-    public Station(String stationTitle, String imgUri) {
+    public Station(String stationTitle, StationGenre stationGenre, String imgUri) {
         this.stationTitle = stationTitle;
         this.imgUri = imgUri;
+        this.stationGenre = stationGenre;
     }
     //endregion
 
