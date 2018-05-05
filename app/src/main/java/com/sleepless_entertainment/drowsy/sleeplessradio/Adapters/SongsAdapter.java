@@ -1,6 +1,5 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Adapters;
 
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,15 +13,13 @@ import com.sleepless_entertainment.drowsy.sleeplessradio.Holders.SongsViewHolder
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
 
     private ArrayList<Song> songs;
 
-    private MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
 
     public SongsAdapter(ArrayList<Song> songs) {
         this.songs = songs;
@@ -50,30 +47,9 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
             playButton.setVisibility(View.GONE);
             pauseButton.setVisibility(View.VISIBLE);
 
-            if (mediaPlayer == null)
-                mediaPlayer = MediaPlayer.create(MainActivity.getMainActivity().getApplicationContext(), song.getSongURI());
+            mediaPlayer = MediaPlayer.create(MainActivity.getMainActivity().getApplicationContext(), song.getSongURI());
 
             mediaPlayer.start();
-//
-//            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                try {
-//                    mediaPlayer.setDataSource(song.getSongURI());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                    @Override+
-//                    public void onPrepared(MediaPlayer mediaPlayer) {
-//                        mediaPlayer.start();
-//                    }
-//                });
-//                try {
-//                    mediaPlayer.prepare();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
-
             }
         });
 
@@ -86,6 +62,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
 
                 if (mediaPlayer != null && mediaPlayer.isPlaying())
                     mediaPlayer.stop();
+                mediaPlayer.reset();
             }
         });
 

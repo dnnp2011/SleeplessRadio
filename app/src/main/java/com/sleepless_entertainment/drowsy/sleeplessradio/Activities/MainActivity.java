@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Adapters.SongsAdapter;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MediaBarFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     //    TODO: Animate toolbar changes between Fragments
     //    TODO: Add more station cards to exemplify scrolling functionality
     //    TODO: Add "More" Button
-    //    TODO: Add "Now Playing" footer toolbar to MainActivity
     //    TODO: Add capacity to play limited number of songs, or tune into internet radio station
     //    TODO: Animate CardView inflating into DetailsFragment background
     //    TODO: Add basic search functionality
@@ -34,8 +34,15 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     //    TODO: Add basic media player options: Start, Stop, Pause
     //    TODO: Add data persistence for recent stations, and current playing song
     //    TODO: Handle switching view modes
+    //    TODO: Change genre images between stations
+    //    TODO: Implement proper "recent activity" station functionality
+    //    TODO: When hitting play on a new song, stop all other songs, and reset their PAUSE/PLAY buttons
     //    TODO:
     //    BUG: Problem with Station label under Kid's Jams
+    //    BUG: Pressing PAUSE/START changes the size of SongCard
+    //    BUG: PAUSE and START buttons aren't aligned
+    //    BUG: MediaBar doesn't appear properly sized on certain devices
+    //    BUG:
     //endregion
 
     private static MainActivity mainActivity;
@@ -120,5 +127,11 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     @Override
     public void onMediaBarFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SongsAdapter.mediaPlayer.release();
     }
 }
