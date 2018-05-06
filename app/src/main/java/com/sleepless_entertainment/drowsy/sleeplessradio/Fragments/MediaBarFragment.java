@@ -1,48 +1,43 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MediaBarFragment.OnMediaBarFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MediaBarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MediaBarFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import static com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer.*;
+
+
+public class MediaBarFragment extends Fragment implements View.OnClickListener, OnMusicPlayerInteractionListener {
+
+//    TODO: Take input from mediaBar, update mediaPlayer
+//    TODO: Update based on event from mediaPlayer
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private ImageButton playButton, pauseButton;
+    private TextView songName, songDescr;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnMediaBarFragmentInteractionListener mListener;
+    private OnMediaBarFragmentInteractionListener mCallback;
 
     public MediaBarFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MediaBarFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MediaBarFragment newInstance(String param1, String param2) {
         MediaBarFragment fragment = new MediaBarFragment();
         Bundle args = new Bundle();
@@ -59,19 +54,55 @@ public class MediaBarFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        MusicPlayer.getInstance().setListenerRef(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_media_bar, container, false);
+        View view = inflater.inflate(R.layout.fragment_media_bar, container, false);
+
+        playButton = view.findViewById(R.id.playButton);
+        pauseButton = view.findViewById(R.id.pauseButton);
+        songName = view.findViewById(R.id.songNameView);
+        songDescr = view.findViewById(R.id.songDescrView);
+
+        playButton.setOnClickListener(this);
+        pauseButton.setOnClickListener(this);
+        playButton.setAlpha(0.4f);
+        pauseButton.setAlpha(0.4f);
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onMediaBarFragmentInteraction(uri);
+    // TODO: Rename method, update argument and hook method into UI
+    @Override
+    public void onClick(View view) {
+        MusicPlayer player = MusicPlayer.getInstance();
+
+        if (player.getCurrentSong().equals(null))
+            return;
+
+        ImageButton button = (ImageButton) view;
+        if (button.equals(playButton)) {
+            System.out.println("Play button pressed");
+            if (!player.isSongPlaying())
+            {
+                player.playSong(player.getCurrentSong());
+                playButton.setAlpha(0.4f);
+                pauseButton.setAlpha(1f);
+            }
+        }
+        else if (button.equals(pauseButton)) {
+            System.out.println("Pause button pressed");
+            if (player.isSongPlaying())
+            {
+                player.pauseSong();
+                pauseButton.setAlpha(0.4f);
+                playButton.setAlpha(1f);
+            }
         }
     }
 
@@ -79,7 +110,7 @@ public class MediaBarFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnMediaBarFragmentInteractionListener) {
-            mListener = (OnMediaBarFragmentInteractionListener) context;
+            mCallback = (OnMediaBarFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -89,21 +120,19 @@ public class MediaBarFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        mCallback = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void OnMusicPlayerInteraction(Song song) {
+//        Event from MusicPlayer when a new song begins playing, set Song info
+        songName.setText(song.getName());
+        songDescr.setText(song.getDescription());
+        pauseButton.setAlpha(1f);
+    }
+
     public interface OnMediaBarFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onMediaBarFragmentInteraction(Uri uri);
+        void onMediaBarFragmentInteraction(MediaCommand command);
     }
 }
