@@ -1,6 +1,5 @@
 package com.sleepless_entertainment.drowsy.sleeplessradio.Adapters;
 
-import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,18 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Holders.SongsViewHolder;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
 import java.util.ArrayList;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
 
     private ArrayList<Song> songs;
-
-    public static MediaPlayer mediaPlayer;
 
     public SongsAdapter(ArrayList<Song> songs) {
         this.songs = songs;
@@ -36,33 +33,21 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
     public void onBindViewHolder(@NonNull final SongsViewHolder holder, int position) {
         final Song song = songs.get(position);
 
-        final ImageButton playButton = holder.itemView.findViewById(R.id.songPlayBtn);
-        final ImageButton pauseButton = holder.itemView.findViewById(R.id.songPauseBtn);
+        song.setPlayButton((ImageButton) holder.itemView.findViewById(R.id.songPlayBtn));
+        song.setPauseButton((ImageButton) holder.itemView.findViewById(R.id.songPauseBtn));
 
-        playButton.setOnClickListener(new View.OnClickListener() {
+
+        song.getPlayButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TODO: Setup PLAY functionality
-//                MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.getMainActivity().getApplicationContext(), )
-            playButton.setVisibility(View.GONE);
-            pauseButton.setVisibility(View.VISIBLE);
-
-            mediaPlayer = MediaPlayer.create(MainActivity.getMainActivity().getApplicationContext(), song.getSongURI());
-
-            mediaPlayer.start();
+                MusicPlayer.getInstance().playSong(song);
             }
         });
 
-        pauseButton.setOnClickListener(new View.OnClickListener() {
+        song.getPauseButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TODO: Setup PAUSE functionality
-                playButton.setVisibility(View.VISIBLE);
-                pauseButton.setVisibility(View.GONE);
-
-                if (mediaPlayer != null && mediaPlayer.isPlaying())
-                    mediaPlayer.stop();
-                mediaPlayer.reset();
+                MusicPlayer.getInstance().pauseSong();
             }
         });
 
@@ -74,4 +59,8 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
         return songs.size();
     }
 
+    public void stopAllSongs() {
+        //reset all song play btns
+        //Trigger change event in mediaBar
+    }
 }

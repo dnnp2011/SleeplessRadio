@@ -10,6 +10,7 @@ import com.sleepless_entertainment.drowsy.sleeplessradio.Adapters.SongsAdapter;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MediaBarFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -132,6 +133,6 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     @Override
     protected void onStop() {
         super.onStop();
-        SongsAdapter.mediaPlayer.release();
+        MusicPlayer.getInstance().destroy();
     }
 }
