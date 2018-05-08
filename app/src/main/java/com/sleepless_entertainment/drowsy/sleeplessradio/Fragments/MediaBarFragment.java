@@ -9,27 +9,28 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
+import java.io.IOException;
+
 import static com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer.*;
 
 
-public class MediaBarFragment extends Fragment implements View.OnClickListener, OnMusicPlayerInteractionListener {
+public class MediaBarFragment extends Fragment implements View.OnClickListener {
 
 //    TODO: Take input from mediaBar, update mediaPlayer
 //    TODO: Update based on event from mediaPlayer
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_CURRENT_SONG = "argCurrentSong";
 
     private ImageButton playButton, pauseButton;
     private TextView songName, songDescr;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Song mCurrentSong;
 
     private OnMediaBarFragmentInteractionListener mCallback;
 
@@ -37,12 +38,16 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener, 
         // Required empty public constructor
     }
 
-
-    public static MediaBarFragment newInstance(String param1, String param2) {
+    public static MediaBarFragment newInstance(Song song) {
         MediaBarFragment fragment = new MediaBarFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        try {
+            String string = MainActivity.serializeToString(song);
+            System.out.println(string);
+            args.putString(ARG_CURRENT_SONG, string);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,11 +56,13 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            try {
+                mCurrentSong = (Song) MainActivity.reconstituteFromString(getArguments().getString(ARG_CURRENT_SONG));
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-
-        MusicPlayer.getInstance().setListenerRef(this);
+//        MusicPlayer.getInstance().setListenerRef(this);
     }
 
     @Override
@@ -67,14 +74,21 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener, 
         playButton = view.findViewById(R.id.playButton);
         pauseButton = view.findViewById(R.id.pauseButton);
         songName = view.findViewById(R.id.songNameView);
-        songDescr = view.findViewById(R.id.songDescrView);
+        songDescr = view.findViewById(R.id.songDescrView);;
 
         playButton.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
         playButton.setAlpha(0.4f);
         pauseButton.setAlpha(0.4f);
 
+        setSongInfo();
+
         return view;
+    }
+
+    private void setSongInfo() {
+        songName.setText(mCurrentSong.getName());
+        songDescr.setText(mCurrentSong.getDescription());
     }
 
     // TODO: Rename method, update argument and hook method into UI
@@ -82,12 +96,11 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View view) {
         MusicPlayer player = MusicPlayer.getInstance();
 
-        if (player.getCurrentSong().equals(null))
+        if (!player.isPlayerActive())
             return;
 
         ImageButton button = (ImageButton) view;
         if (button.equals(playButton)) {
-            System.out.println("Play button pressed");
             if (!player.isSongPlaying())
             {
                 player.playSong(player.getCurrentSong());
@@ -96,7 +109,6 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener, 
             }
         }
         else if (button.equals(pauseButton)) {
-            System.out.println("Pause button pressed");
             if (player.isSongPlaying())
             {
                 player.pauseSong();
@@ -123,13 +135,13 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener, 
         mCallback = null;
     }
 
-    @Override
-    public void OnMusicPlayerInteraction(Song song) {
-//        Event from MusicPlayer when a new song begins playing, set Song info
-        songName.setText(song.getName());
-        songDescr.setText(song.getDescription());
-        pauseButton.setAlpha(1f);
-    }
+//    @Override
+//    public void OnMusicPlayerInteraction(Song song) {
+////        Event from MusicPlayer when a new song begins playing, set Song info
+//        songName.setText(song.getName());
+//        songDescr.setText(song.getDescription());
+//        pauseButton.setAlpha(1f);
+//    }
 
     public interface OnMediaBarFragmentInteractionListener {
         // TODO: Update argument type and name

@@ -4,7 +4,7 @@ import android.widget.ImageButton;
 
 public class Song {
 
-    private final String RAW = "raw/";
+    private String RAW = "raw/";
     private String name;
     private String description;
     private Station.StationGenre SongGenre;
@@ -50,10 +50,10 @@ public class Song {
     }
 
     public ImageButton getPlayButton() {
-        return playButton;
+        return (ImageButton) playButton;
     }
 
     public ImageButton getPauseButton() {
-        return pauseButton;
+        return (ImageButton) pauseButton;
     }
 }

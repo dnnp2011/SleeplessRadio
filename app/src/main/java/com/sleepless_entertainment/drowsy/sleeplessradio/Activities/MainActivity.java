@@ -40,11 +40,16 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     //    TODO: Change genre images between stations
     //    TODO: Implement proper "recent activity" station functionality
     //    TODO: When hitting play on a new song, stop all other songs, and reset their PAUSE/PLAY buttons
+    //    TODO: Animate PLAY/PAUSE switch (at least an opacity transition)
     //    TODO:
     //    BUG: Problem with Station label under Kid's Jams
     //    BUG: Pressing PAUSE/START changes the size of SongCard
     //    BUG: PAUSE and START buttons aren't aligned
     //    BUG: MediaBar doesn't appear properly sized on certain devices
+    //    BUG: App crashes when switching to landscape
+    //    BUG: Under certain circumstances the PLAY/PAUSE buttons don't properly revert (when current song is paused from MediaBar and another SongCard's play button is pressed, both songs switch to pause icon
+    //    BUG: App crashes when opening to detail view while previously playin song (Song data is not persistent)
+    //    BUG: App crashes when pressing MediaBar buttons before playing a song
     //    BUG:
     //endregion
 
@@ -69,11 +74,6 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     }
 
     private void loadMainFragment() {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.add(R.id.fragment_container, new StationsFragment());
-//        transaction.commit();
-
-//        Alternate Method, Allows activity to load much faster if the fragment has already been initialized
         FragmentManager manager = getSupportFragmentManager();
         MainFragment mainFragment = (MainFragment) manager.findFragmentById(R.id.fragment_container);
 
@@ -84,16 +84,22 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
                     .add(R.id.fragment_container, mainFragment)
                     .commit();
         }
+    }
 
+    public void loadMediaBarFragment(Song song) {
+        FragmentManager manager = getSupportFragmentManager();
+        MediaBarFragment mediaBarFragment = (MediaBarFragment) manager.findFragmentById(R.id.media_bar_container);
 
-
-            MediaBarFragment mediaBarFragment = (MediaBarFragment) manager.findFragmentById(R.id.media_bar_container);
-
-
-        if (mediaBarFragment == null) {
+        if (mediaBarFragment == null && song != null) {
             manager.beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
-                    .add(R.id.media_bar_container, MediaBarFragment.newInstance("",""))
+                    .add(R.id.media_bar_container, MediaBarFragment.newInstance(song))
+                    .commit();
+        }
+        else {
+            manager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                    .replace(R.id.media_bar_container, MediaBarFragment.newInstance(song))
                     .commit();
         }
     }

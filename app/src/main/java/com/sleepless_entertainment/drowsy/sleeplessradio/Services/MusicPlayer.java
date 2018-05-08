@@ -4,16 +4,15 @@ import android.media.MediaPlayer;
 import android.view.View;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
-import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MediaBarFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 
 public class MusicPlayer {
 
     private static final MusicPlayer instance = new MusicPlayer();
 
-    private MediaPlayer mediaPlayer;
-    private Song lastSong = null;
-    private Song currentSong = null;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private Song lastSong;
+    private Song currentSong;
 
     public OnMusicPlayerInteractionListener mCallback;
 
@@ -44,8 +43,12 @@ public class MusicPlayer {
         return currentSong;
     }
 
+    public boolean isPlayerActive() {
+        return mediaPlayer != null && currentSong != null;
+    }
+
     public boolean isSongPlaying() {
-        return mediaPlayer.isPlaying();
+        return currentSong != null && mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
     public void playSong(Song song) {
@@ -59,10 +62,14 @@ public class MusicPlayer {
             }
             stopSong();
         }
+
+        MainActivity.getMainActivity().loadMediaBarFragment(song);
+
         mediaPlayer = MediaPlayer.create(MainActivity.getMainActivity().getApplicationContext(), song.getSongURI());
         mediaPlayer.start();
         currentSong = song;
-        mCallback.OnMusicPlayerInteraction(currentSong);
+        if (mCallback != null)
+            mCallback.OnMusicPlayerInteraction(currentSong);
         alternatePlayPause(currentSong);
     }
 
