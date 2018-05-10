@@ -87,7 +87,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#bababa"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/media_bar_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -97,16 +97,12 @@
     <FrameLayout
         android:id="@+id/media_bar_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="600dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:backgroundTint="@android:color/transparent"
         android:foregroundGravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
 
