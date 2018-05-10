@@ -2,6 +2,8 @@ package com.sleepless_entertainment.drowsy.sleeplessradio.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +11,24 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
-import java.io.IOException;
-
 import static com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer.*;
 
 
-public class MediaBarFragment extends Fragment implements View.OnClickListener {
+public class MediaBarFragment extends Fragment implements View.OnClickListener, MusicPlayer.OnMusicPlayerInteractionListener {
 
 //    TODO: Take input from mediaBar, update mediaPlayer
 //    TODO: Update based on event from mediaPlayer
 
-    private static final String ARG_CURRENT_SONG = "argCurrentSong";
+    private static final String ARG_PARAM = "argParam";
 
     private ImageButton playButton, pauseButton;
     private TextView songName, songDescr;
-
-    // TODO: Rename and change types of parameters
-    private Song mCurrentSong;
+    private Song currentSong;
+    private String mString;
 
     private OnMediaBarFragmentInteractionListener mCallback;
 
@@ -38,17 +36,12 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    public static MediaBarFragment newInstance(Song song) {
+    public static MediaBarFragment newInstance(String data) {
         MediaBarFragment fragment = new MediaBarFragment();
         Bundle args = new Bundle();
-        try {
-            String string = MainActivity.serializeToString(song);
-            System.out.println(string);
-            args.putString(ARG_CURRENT_SONG, string);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        args.putString(ARG_PARAM, data);
         fragment.setArguments(args);
+        MusicPlayer.getInstance().setListenerRef(fragment);
         return fragment;
     }
 
@@ -56,13 +49,8 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            try {
-                mCurrentSong = (Song) MainActivity.reconstituteFromString(getArguments().getString(ARG_CURRENT_SONG));
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            mString = getArguments().getString(ARG_PARAM);
         }
-//        MusicPlayer.getInstance().setListenerRef(this);
     }
 
     @Override
@@ -74,7 +62,7 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener {
         playButton = view.findViewById(R.id.playButton);
         pauseButton = view.findViewById(R.id.pauseButton);
         songName = view.findViewById(R.id.songNameView);
-        songDescr = view.findViewById(R.id.songDescrView);;
+        songDescr = view.findViewById(R.id.songDescrView);
 
         playButton.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
@@ -87,8 +75,8 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setSongInfo() {
-        songName.setText(mCurrentSong.getName());
-        songDescr.setText(mCurrentSong.getDescription());
+        songName.setText(currentSong.getName());
+        songDescr.setText(currentSong.getDescription());
     }
 
     // TODO: Rename method, update argument and hook method into UI
@@ -135,13 +123,10 @@ public class MediaBarFragment extends Fragment implements View.OnClickListener {
         mCallback = null;
     }
 
-//    @Override
-//    public void OnMusicPlayerInteraction(Song song) {
-////        Event from MusicPlayer when a new song begins playing, set Song info
-//        songName.setText(song.getName());
-//        songDescr.setText(song.getDescription());
-//        pauseButton.setAlpha(1f);
-//    }
+    @Override
+    public void OnMusicPlayerInteraction(Song song) {
+        this.currentSong = song;
+    }
 
     public interface OnMediaBarFragmentInteractionListener {
         // TODO: Update argument type and name

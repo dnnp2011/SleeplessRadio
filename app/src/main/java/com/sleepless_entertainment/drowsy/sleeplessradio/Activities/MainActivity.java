@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     //    TODO: Implement proper "recent activity" station functionality
     //    TODO: When hitting play on a new song, stop all other songs, and reset their PAUSE/PLAY buttons
     //    TODO: Animate PLAY/PAUSE switch (at least an opacity transition)
+    //    TODO: Adjust bottom padding when MediaBar is instantiated
     //    TODO:
     //    BUG: Problem with Station label under Kid's Jams
     //    BUG: Pressing PAUSE/START changes the size of SongCard
@@ -86,22 +87,14 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
         }
     }
 
-    public void loadMediaBarFragment(Song song) {
+    public void loadMediaBarFragment() {
         FragmentManager manager = getSupportFragmentManager();
         MediaBarFragment mediaBarFragment = (MediaBarFragment) manager.findFragmentById(R.id.media_bar_container);
 
-        if (mediaBarFragment == null && song != null) {
-            manager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
-                    .add(R.id.media_bar_container, MediaBarFragment.newInstance(song))
-                    .commit();
-        }
-        else {
-            manager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
-                    .replace(R.id.media_bar_container, MediaBarFragment.newInstance(song))
-                    .commit();
-        }
+        manager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+                .replace(R.id.media_bar_container, MediaBarFragment.newInstance(""))
+                .commit();
     }
 
     /**
