@@ -2,8 +2,6 @@ package com.sleepless_entertainment.drowsy.sleeplessradio.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,7 @@ import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
-import static com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer.*;
+import static com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer.MediaCommand;
 
 
 public class MediaBarFragment extends Fragment implements View.OnClickListener, MusicPlayer.OnMusicPlayerInteractionListener {
