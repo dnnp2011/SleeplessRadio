@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     //endregion
 
     private static MainActivity mainActivity;
+    public MusicPlayer musicPlayer;
 
     public static MainActivity getMainActivity() {
         return mainActivity;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
         setContentView(R.layout.activity_main);
 
         MainActivity.setMainActivity(this);
+        this.musicPlayer = new MusicPlayer();
 
         loadMainFragment();
     }
@@ -124,8 +126,9 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
 
     @Override
     protected void onStop() {
+        this.musicPlayer.destroy();
+        this.musicPlayer = null;
         super.onStop();
-        MusicPlayer.getInstance().destroy();
     }
 
     @Override
