@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.sleepless_entertainment.drowsy.sleeplessradio.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Holders.SongsViewHolder;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
@@ -14,7 +15,7 @@ import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
 import java.util.ArrayList;
 
-public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
+public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> implements MusicPlayer.OnMusicPlayerInteractionListener {
 
     private ArrayList<Song> songs;
 
@@ -40,14 +41,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
         song.getPlayButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MusicPlayer.getInstance().playSong(song);
+                MainActivity.getMainActivity().musicPlayer.playSong(song);
             }
         });
 
         song.getPauseButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MusicPlayer.getInstance().pauseSong();
+                MainActivity.getMainActivity().musicPlayer.pauseSong(song);
             }
         });
 
@@ -62,5 +63,23 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
     public void stopAllSongs() {
         //reset all song play btns
         //Trigger change event in mediaBar
+    }
+
+    @Override
+    public void OnMusicPlayerPlaySong(Song song) {
+        ImageButton playBtn = song.getPlayButton();
+        ImageButton pauseBtn = song.getPauseButton();
+//        Make pause active, play inactive
+        //TODO: Implement these interface methods
+    }
+
+    @Override
+    public void OnMusicPlayerPauseSong(Song song) {
+
+    }
+
+    @Override
+    public void OnMusicPlayerStopSong(Song song) {
+
     }
 }

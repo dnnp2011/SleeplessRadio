@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MainFragment;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Fragments.MediaBarFragment;
+import com.sleepless_entertainment.drowsy.sleeplessradio.Model.Song;
 import com.sleepless_entertainment.drowsy.sleeplessradio.R;
 import com.sleepless_entertainment.drowsy.sleeplessradio.Services.MusicPlayer;
 
@@ -18,7 +19,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Base64;
 
-public class MainActivity extends AppCompatActivity implements MediaBarFragment.OnMediaBarFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MusicPlayer.OnMusicPlayerInteractionListener {
 
     //region To-Do List:
     //    TODO: Add basic functionality to toolbar buttons
@@ -85,9 +86,12 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
         }
     }
 
+    public boolean mediaBarFragmentLoaded() {
+        return getSupportFragmentManager().findFragmentById(R.id.media_bar_container) == null;
+    }
+
     public void loadMediaBarFragment() {
         FragmentManager manager = getSupportFragmentManager();
-        MediaBarFragment mediaBarFragment = (MediaBarFragment) manager.findFragmentById(R.id.media_bar_container);
 
         manager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom)
@@ -132,7 +136,17 @@ public class MainActivity extends AppCompatActivity implements MediaBarFragment.
     }
 
     @Override
-    public void onMediaBarFragmentInteraction(MusicPlayer.MediaCommand command) {
+    public void OnMusicPlayerPlaySong(Song song) {
+
+    }
+
+    @Override
+    public void OnMusicPlayerPauseSong(Song song) {
+
+    }
+
+    @Override
+    public void OnMusicPlayerStopSong(Song song) {
 
     }
 }
